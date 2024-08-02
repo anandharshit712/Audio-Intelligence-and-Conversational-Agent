@@ -25,17 +25,16 @@ lang_result = model.detect_language(mel)
 # Debug print to inspect the structure of lang_result
 print(f"lang_result: {lang_result}")
 
-# Unpack lang_result if it's a tuple
-if isinstance(lang_result, tuple) and len(lang_result) == 2:
-    probs = lang_result[1]
-    if isinstance(probs, dict):
-        detected_language = max(probs, key=probs.get)
-        print(f"Detected Language: {detected_language}")
-    else:
-        print("Error: 'probs' is not a dictionary")
-        detected_language = None
+# Store all elements except the first one in another variable
+probs = lang_result[1] if len(lang_result) > 1 else []
+
+# Ensure probs is a dictionary
+if isinstance(probs, list) and len(probs) > 0 and isinstance(probs[0], dict):
+    probs = probs[0]
+    detected_language = max(probs, key=probs.get)
+    print(f"Detected Language: {detected_language}")
 else:
-    print("Error: 'lang_result' does not have the expected structure")
+    print("Error: 'probs' is not a dictionary")
     detected_language = None
 
 # Proceed with transcription and translation only if language detection succeeded

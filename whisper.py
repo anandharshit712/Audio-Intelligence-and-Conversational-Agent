@@ -5,11 +5,13 @@ import torch
 # Load whisper model
 model = whisper.load_model('medium')
 
+
 def load_audio(file_path):
     audio, sr = torchaudio.load(file_path)
     audio = audio.mean(dim=0)
     audio = torchaudio.transforms.Resample(orig_freq=sr, new_freq=16000)(audio)
     return audio
+
 
 audio = load_audio("CallRecording3.mp3")
 
@@ -38,23 +40,23 @@ else:
     detected_language = None
 
 # Proceed with transcription and translation only if language detection succeeded
-# if detected_language:
-#     # Transcribe the audio
-#     result = model.transcribe("CallRecording3.mp3")
-#     transcription = result['text']
-#     print("Transcription:", transcription)
-#
-#     # Save the transcript to text file
-#     with open("transcription.txt", "w", encoding="utf-8") as f:
-#         f.write(transcription)
-#
-#     # If the detected language is not English, translate the transcription
-#     if detected_language != "en":
-#         translated = model.transcribe("CallRecording3.mp3", task="translate")
-#         translation = translated["text"]
-#         print("Translation:", translation)
-#
-#         with open("translation.txt", "w", encoding="utf-8") as f:
-#             f.write(translation)
-# else:
-#     print("Language detection failed; skipping transcription and translation.")
+if detected_language:
+    # Transcribe the audio
+    result = model.transcribe("CallRecording3.mp3")
+    transcription = result['text']
+    print("Transcription:", transcription)
+
+    # Save the transcript to text file
+    with open("transcription.txt", "w", encoding="utf-8") as f:
+        f.write(transcription)
+
+    # If the detected language is not English, translate the transcription
+    if detected_language != "en":
+        translated = model.transcribe("CallRecording3.mp3", task="translate")
+        translation = translated["text"]
+        print("Translation:", translation)
+
+        with open("translation.txt", "w", encoding="utf-8") as f:
+            f.write(translation)
+else:
+    print("Language detection failed; skipping transcription and translation.")

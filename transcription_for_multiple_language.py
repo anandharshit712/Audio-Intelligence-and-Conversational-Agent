@@ -1,6 +1,5 @@
 import datetime
 import subprocess
-
 import whisper
 import torch
 import pyannote.audio
@@ -15,11 +14,11 @@ import numpy as np
 embedding_model = PretrainedSpeakerEmbedding("speechbrain/spkrec-ecapa-voxceleb",
                                              device=torch.device("cuda" if torch.cuda.is_available() else "cpu"))
 
-file_path = "audio1.wav"
+file_path = "Test audio/CallRecording3.mp3"
 
-num_speaker = 5  #@param {type: "integer"}
-language = "any"  #@param ['any', 'English']
-model_size = 'large'  #@param ['Tiny, 'Base', 'Smale', 'Medium', 'Large']
+num_speaker = 5
+language = "any"
+model_size = 'large'
 
 model_name = model_size
 if language == 'English' and model_size != 'large':

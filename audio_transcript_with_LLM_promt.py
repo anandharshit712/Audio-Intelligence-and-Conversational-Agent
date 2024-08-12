@@ -95,6 +95,6 @@ def process(path):
     #         print(f"Failed to get response from LLM model : {e}\nExiting....")
     #         break
 
-path_to_file = "ANI.mp4"
+path_to_file = "Test videos/sam_altman_podcast.mp4"
 process(path_to_file)
 

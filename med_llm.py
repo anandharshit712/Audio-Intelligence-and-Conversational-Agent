@@ -10,8 +10,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model.to(device)
 
 # Read prompt and content from text file
-with open("input_text.txt", "r") as file:
-    prompt = file.readline().strip()  # Read the first line as the prompt
+with open("Transcript2.txt", "r") as file:
+    prompt = "Summerize the following content"  # Read the first line as the prompt
     content = file.read().strip()     # Read the rest as the content
 
 # Combine prompt and content

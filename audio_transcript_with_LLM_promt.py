@@ -6,11 +6,14 @@ import librosa
 import soundfile as sf
 import mimetypes
 import os
+import numpy as np
 from langchain_community.llms import Ollama
+# from speaker_diarization import speaker_count
+from sklearn.cluster import KMeans
 
 aai.settings.api_key = "4da02acda77448cd8368d9d100fde23f"
 
-ollama = Ollama(base_url="http://localhost:11434", model="gemma:7b")
+ollama = Ollama(base_url="http://localhost:11434", model="mistral-nemo")
 
 
 # Convert video file to audio
@@ -65,10 +68,11 @@ def process(path):
         noise_reduction("audio.wav")
 
     transcript = create_transcript("clean_audio.wav")
-    save(transcript, "Transcript2.txt")
-    print("Transcript saved to Transcript1.txt...")
+    save(transcript, "Transcript/Transcript2_med_mistral-nemo_6.txt")
+    print("Transcript saved to Transcript2.txt...")
 
-    prompt = "Summarize the following content:\n\n" + transcript
+    prompt_input = input("Enter prompt for LLM:\n")
+    prompt = transcript + prompt_input
 
     try:
         response = ollama(prompt)
@@ -76,11 +80,11 @@ def process(path):
         print(f"Failed to get response from LLM model : {e}\nExiting....")
         return
 
-    save(response, "Response2.txt")
-    print("Response saved to Response1.txt...")
+    save(response, "Response/Response2_med_mistral-nemo_6.txt")
+    print("Response saved to Response2.txt...")
 
     # while True:
-    #     user_prompt = input("Enter your prompt (or type 'EXIT' to quit): ")
+    #     user_prompt = input("Enter your prompt (or type 'EXIT' to quit):")
     #     if user_prompt.upper() == "EXIT":
     #         print("Exiting...")
     #         break
@@ -95,6 +99,7 @@ def process(path):
     #         print(f"Failed to get response from LLM model : {e}\nExiting....")
     #         break
 
-path_to_file = "Test videos/sam_altman_podcast.mp4"
+# path_to_file = "Test audio/Cardiac_Arrest.mp3"
+path_to_file = "audio1.wav"
 process(path_to_file)
 

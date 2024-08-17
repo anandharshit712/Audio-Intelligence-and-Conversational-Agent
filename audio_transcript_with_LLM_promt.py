@@ -68,7 +68,7 @@ def process(path):
         noise_reduction("audio.wav")
 
     transcript = create_transcript("clean_audio.wav")
-    save(transcript, "Transcript/Transcript2_med_mistral-nemo_6.txt")
+    save(transcript, "Transcript/Transcript_test.txt")
     print("Transcript saved to Transcript2.txt...")
 
     prompt_input = input("Enter prompt for LLM:\n")
@@ -100,6 +100,6 @@ def process(path):
     #         break
 
 # path_to_file = "Test audio/Cardiac_Arrest.mp3"
-path_to_file = "audio1.wav"
+path_to_file = "clean_audio.wav"
 process(path_to_file)
 

@@ -2,29 +2,17 @@ import librosa
 import numpy as np
 import soundfile as sf
 
+def voice_isolation(audio):
+    y, sr = librosa.load(audio, sr = None)
+    stft = librosa.stft(y)
+    magnitude, phase = np.abs(stft), np.angle(stft)
+    noise_profile = np.mean(magnitude[:,:int(sr*0.5)], axis=1)
+    noise_threshold = 1.5 * noise_profile
+    mask = magnitude > noise_threshold[:, np.newaxis]
+    isolated_stft = stft * mask
+    isolated_audio = librosa.istft(isolated_stft)
+    sf.write('temp.wav', isolated_audio, sr)
+    print("Isolated Audio Saved as temp.wav")
 # Load audio file
-audio_path = 'cleaned_audio.wav'
-y, sr = librosa.load(audio_path, sr=None)
-
-# Short-time Fourier transform (STFT)
-stft = librosa.stft(y)
-
-# Magnitude and phase
-magnitude, phase = np.abs(stft), np.angle(stft)
-
-# Create a noise profile
-# This could be based on a segment of the audio where there's no speech
-noise_profile = np.mean(magnitude[:, :int(sr*0.5)], axis=1)
-
-# Estimate a mask where the magnitude is above the noise threshold
-noise_threshold = 1.5 * noise_profile
-mask = magnitude > noise_threshold[:, np.newaxis]
-
-# Apply mask to the STFT
-isolated_stft = stft * mask
-
-# Inverse STFT to get back to time domain
-isolated_audio = librosa.istft(isolated_stft)
-
-# Save the isolated audio
-sf.write('isolated_audio.wav', isolated_audio, sr)
+audio_path = 'Test audio/CallRecording3.mp3'
+voice_isolation(audio_path)

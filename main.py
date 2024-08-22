@@ -46,4 +46,4 @@ def create_transcript(file_path):
         transcript = whisper_transcript(file_path, language)
         return transcript
 
-def translate(transcript, target_language):
+# def translate(transcript, target_language):

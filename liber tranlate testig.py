@@ -16,7 +16,7 @@ headers = {
 print(lt.languages())
 # [{"code":"en", "name":"English"}]
 destination_language="hi"
-input_filename = 'Response2.txt'  # Specify your input text file
+input_filename = 'Response/Response2.txt'  # Specify your input text file
 with open(input_filename, 'r', encoding='utf-8') as file:
             input_text = file.read()
             #print(input_text)

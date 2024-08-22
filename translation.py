@@ -25,7 +25,7 @@ def translate_file(input_filename, destination_language, api_url="http://127.0.0
     return translated_text
 
 
-# Example usage:
-input_file = 'Response2.txt'
-translated_text = translate_file(input_file, destination_language="hi")
-print(translated_text)
+# # Example usage:
+# input_file = 'Response2.txt'
+# translated_text = translate_file(input_file, destination_language="hi")
+# print(translated_text)

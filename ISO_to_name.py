@@ -27,8 +27,8 @@ def iso_to_language_name(iso_code):
 
     return language_dict.get(iso_code, "Unknown ISO code")
 
-
-# Example usage:
-iso_code = 'bn'
-language_name = iso_to_language_name(iso_code)
-print(f"The language for ISO code '{iso_code}' is '{language_name}'.")
+#
+# # Example usage:
+# iso_code = 'bn'
+# language_name = iso_to_language_name(iso_code)
+# print(f"The language for ISO code '{iso_code}' is '{language_name}'.")

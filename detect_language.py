@@ -24,6 +24,6 @@ def detect_language(audio_path):
 
     # print(detected_language)
     return detected_language
-
-file_path = "temp.wav"
-language = detect_language(file_path)
+#
+# file_path = "temp.wav"
+# language = detect_language(file_path)

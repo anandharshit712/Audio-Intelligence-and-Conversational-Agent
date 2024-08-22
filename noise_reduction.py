@@ -9,5 +9,5 @@ def noise_reduction(audio_file):
     sf.write("temp.wav", reduced_noise, sample_rate)
     print("Noise Reduction Complete")
 
-audio_file = "temp.wav"
-noise_reduction(audio_file)
+# audio_file = "temp.wav"
+# noise_reduction(audio_file)

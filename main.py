@@ -1,22 +1,15 @@
 from langchain_community.llms.ollama import Ollama
 import whisper
-from detect_language import detect_language, file_path
+from detect_language import detect_language
 from voice_isolation import voice_isolation
 from noise_reduction import noise_reduction
 from translation import translate_file
-from convert_to_wav import main
+from convert_to_wav import convert
 from ISO_to_name import iso_to_language_name
 import assemblyai as aai
-import torchaudio
 
 ollama = Ollama(base_url = "http://localhost:11434", model = "mistral-nemo")
 model = whisper.load_model('large')
-
-def load_audio(file_path):
-    audio, sr = torchaudio.load(file_path)
-    audio = audio.mean(dim=0)
-    audio = torchaudio.transforms.Resample(orig_freq=sr, new_freq=16000)(audio)
-    return audio
 
 def language_detection(file_path):
     detected_language = detect_language(file_path)
@@ -24,7 +17,7 @@ def language_detection(file_path):
 
 def process_audio(file_path):
     file_path = "temp.wav"
-    main(file_path)
+    convert(file_path)
     voice_isolation(file_path)
     noise_reduction(file_path)
 
@@ -34,12 +27,12 @@ def whisper_transcript(file_path, language):
         transcription = result['text']
         return transcription
 
-def translate(transcript, target_language):
+def translate(file, target_language):
     if target_language == "en":
-        translated_text = translate_file(transcript, target_language)
+        translated_text = translate_file(file, target_language)
         return translated_text
     else:
-        response_translation = translate_file(transcript, target_language)
+        response_translation = translate_file(file, target_language)
         return response_translation
 
 def create_transcript(file_path):
@@ -67,14 +60,13 @@ def LLM(transcript, question):
     return response
 
 def save_files(content, file_path):
-    with open(file_path, "wb") as f:
+    with open(file_path, "w", encoding="utf-8") as f:
         f.write(content)
     print("File Saved Successfully")
 
 def main():
     path = "Test audio/CallRecording3.mp3"
-    audio = load_audio(path)
-    original_language = language_detection(audio)
+    original_language = language_detection(path)
     process_audio(path)
     transcript = create_transcript("temp.wav")
     save_files(transcript, "Transcript_main/transcript_main.txt")
@@ -89,4 +81,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

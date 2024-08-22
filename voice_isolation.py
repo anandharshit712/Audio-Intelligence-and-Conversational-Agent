@@ -14,5 +14,5 @@ def voice_isolation(audio):
     sf.write('temp.wav', isolated_audio, sr)
     print("Isolated Audio Saved as temp.wav")
 # Load audio file
-audio_path = 'Test audio/CallRecording3.mp3'
-voice_isolation(audio_path)
+# audio_path = 'Test audio/CallRecording3.mp3'
+# voice_isolation(audio_path)

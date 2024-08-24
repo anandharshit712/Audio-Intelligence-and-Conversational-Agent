@@ -24,6 +24,7 @@ def detect_language(audio_path):
 
     # print(detected_language)
     return detected_language
-#
-# file_path = "temp.wav"
+
+# file_path = "Test audio/CallRecording2.mp3"
 # language = detect_language(file_path)
+# print(language)

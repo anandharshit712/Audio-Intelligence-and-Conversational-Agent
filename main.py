@@ -8,6 +8,7 @@ from convert_to_wav import convert
 from ISO_to_name import iso_to_language_name
 import assemblyai as aai
 
+aai.settings.api_key = "4da02acda77448cd8368d9d100fde23f"
 ollama = Ollama(base_url = "http://localhost:11434", model = "mistral-nemo")
 model = whisper.load_model('large')
 

@@ -73,8 +73,7 @@ if st.session_state.audio_file_path:
             # Clear the input field by resetting the value
             user_input = ""
 
-            # Rerun the app to update the display (optional)
-            # st.experimental_rerun()  # Not available in your version, so we skip it
+            st.rerun()
 else:
     st.warning("Please record or upload an audio file first.")
 
@@ -92,6 +91,7 @@ st.markdown("""
         }
         .stTextInput input {
             padding-left: 20px;
+            padding-bottom: 11px;
         }
         button[kind="primary"] {
             position: fixed;

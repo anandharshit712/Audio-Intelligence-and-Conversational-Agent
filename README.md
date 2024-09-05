@@ -19,7 +19,6 @@ This repository contains tools and scripts for performing automatic speech recog
 - `convert_to_wav.py`: Script for converting audio files to WAV format.
 - `detect_language.py`: Script for detecting the language spoken in an audio file.
 - `detect_speakers.py`: Script for performing speaker diarization.
-- `BERT_summarizer.py`: Script for summarizing text using BERT.
 - `Multilingual_ASR.ipynb`, `OpenAI_Whisper_ASR_Demo.ipynb`, `converting-speech-to-text.ipynb`: Jupyter notebooks demonstrating the use of ASR models and the processing pipeline.
 - `whisper/`: Directory containing the Whisper ASR model and its associated scripts.
 - `.gitignore`: Lists files and directories to be ignored by git.
@@ -66,10 +65,6 @@ This repository contains tools and scripts for performing automatic speech recog
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you have suggestions, bug reports, or feature requests.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Acknowledgements
 

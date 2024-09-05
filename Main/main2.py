@@ -1,43 +1,32 @@
 from langchain_community.llms.ollama import Ollama
-import whisper
 from detect_language import detect_language
-from voice_isolation import voice_isolation
 from noise_reduction import noise_reduction
 from translation import translate_file
 from convert_to_wav import convert
 from ISO_to_name import iso_to_language_name
+from whisper_1 import transcribe
 import assemblyai as aai
 
 aai.settings.api_key = "4da02acda77448cd8368d9d100fde23f"
-ollama = Ollama(base_url = "http://localhost:11434", model = "mistral-nemo")
-model = whisper.load_model('large')
+ollama = Ollama(base_url="http://localhost:11434", model="mistral-nemo")
 
 def language_detection(file_path):
     detected_language = detect_language(file_path)
     return detected_language
 
 def process_audio(file_path):
-    file_path = "temp.wav"
     convert(file_path)
-    voice_isolation(file_path)
-    noise_reduction(file_path)
+    noise_reduction("temp.wav")
 
 def whisper_transcript(file_path, language):
-    if language:
-        result = model.transcribe(file_path)
-        transcription = result['text']
-        return transcription
+    transcript = transcribe(file_path, language)
+    return transcript
 
 def translate(file, target_language):
-    if target_language == "en":
-        translated_text = translate_file(file, target_language)
-        return translated_text
-    else:
-        response_translation = translate_file(file, target_language)
-        return response_translation
+    translated_text = translate_file(file, target_language)
+    return translated_text
 
 def create_transcript(file_path):
-    file_path = "temp.wav"
     language = language_detection(file_path)
     language_name = iso_to_language_name(language)
     print(f"Audio Language: {language_name}")
@@ -46,7 +35,7 @@ def create_transcript(file_path):
         config = aai.TranscriptionConfig()
         transcriber = aai.Transcriber()
         transcript = transcriber.transcribe(file_path, config=config)
-        return transcript
+        return transcript.text
     if language != "en":
         transcript = whisper_transcript(file_path, language)
         return transcript
@@ -55,10 +44,10 @@ def LLM(transcript, question):
     prompt = transcript + question
     try:
         response = ollama(prompt)
+        return response
     except Exception as e:
-        print(f"Failed to get response from LLM model : {e}\nExiting....")
+        print(f"Failed to get response from LLM model: {e}\nExiting....")
         return
-    return response
 
 def save_files(content, file_path):
     with open(file_path, "w", encoding="utf-8") as f:
@@ -66,19 +55,23 @@ def save_files(content, file_path):
     print("File Saved Successfully")
 
 def main():
-    path = "Test audio/CallRecording3.mp3"
+    path = "Test audio/Locked_Away.mp3"
     original_language = language_detection(path)
     process_audio(path)
     transcript = create_transcript("temp.wav")
     save_files(transcript, "Transcript_main/transcript_main.txt")
-    if original_language != "en":
-        eng_transcript = translate(transcript, "en")
-        save_files(eng_transcript, "Transcript_main/Transcript_main_eng/eng_transcript_main1.txt")
-    query = input("Enter Prompt!!!")
+    if original_language == "en":
+        eng_transcript = transcript
+    else:
+        eng_transcript = translate("Transcript_main/Transcript_main_eng/transcript_main.txt", "en")
+    # query = input("Enter Prompt!!! ")
+    # query = "Explain about the issue mentioned in the conversation and the ways to reduce the same."
+    query = "Summarize"
     LLM_response = LLM(eng_transcript, query)
+    print("Getting LLM Response...")
     save_files(LLM_response, "Response_main/Response_main_eng/eng_response_main.txt")
-    ori_lang_response = translate(LLM_response, original_language)
-    save_files(ori_lang_response, "Response_main/Response_main/ori_response_main.txt")
+    if original_language != "en":
+        ori_lang_response = translate("Response_main/response_main.txt", original_language)
 
 if __name__ == "__main__":
     main()

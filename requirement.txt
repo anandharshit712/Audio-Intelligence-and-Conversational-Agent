@@ -1,0 +1,10 @@
+libretranslate
+libretranslatepy
+torchaudio
+noisereduce
+librosa
+soundfile
+mimetype
+pydub
+assemblyai
+langchain-community

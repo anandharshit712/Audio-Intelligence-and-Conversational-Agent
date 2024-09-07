@@ -122,7 +122,6 @@ def get_char_limit(default_limit, api_keys_db):
 def get_routes_limits(args, api_keys_db):
     default_req_limit = args.req_limit
     if default_req_limit == -1:
-        # TODO: better way?
         default_req_limit = 9999999999999
 
     def minute_limits():
@@ -508,7 +507,7 @@ def create_app(args):
               default: 0
               example: 3
             required: false
-            description: Preferred number of alternative translations 
+            description: Preferred number of alternative translations
           - in: formData
             name: api_key
             schema:
@@ -585,7 +584,7 @@ def create_app(args):
             abort(400, description=_("Invalid request: missing %(name)s parameter", name='source'))
         if not target_lang:
             abort(400, description=_("Invalid request: missing %(name)s parameter", name='target'))
-        
+
         try:
             num_alternatives = max(0, int(num_alternatives))
         except ValueError:
@@ -666,7 +665,7 @@ def create_app(args):
 
                     batch_results.append(translated_text)
                     batch_alternatives.append(alternatives)
-                
+
                 result = {"translatedText": batch_results}
 
                 if source_lang == "auto":

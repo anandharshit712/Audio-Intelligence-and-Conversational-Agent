@@ -42,15 +42,12 @@ This repository contains tools and scripts for performing automatic speech recog
 
 1. **Running the Main Application**:
    ```bash
-   python main.py
+   python main2.py
    ```
    This will execute the primary workflow, which may include converting audio files, detecting speakers, transcribing speech, summarizing the conversation, and launching the conversational agent.
 
 2. **Using the Conversational Agent**:
    After processing the audio, you can chat with the Mistral-NeMo model to explore the content further:
-   ```bash
-   python chat_agent.py --audio your_audio_file.wav
-   ```
 
 3. **Using Jupyter Notebooks**:
    Open any of the provided Jupyter notebooks to explore the functionalities interactively. For example, you can run `OpenAI_Whisper_ASR_Demo.ipynb` to test the Whisper ASR model.

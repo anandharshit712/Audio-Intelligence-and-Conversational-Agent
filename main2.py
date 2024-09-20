@@ -55,11 +55,12 @@ def save_files(content, file_path):
     print("File Saved Successfully")
 
 def main():
-    path = "Test audio/Locked_Away.mp3"
+    path = "Test audio/CallRecording3.mp3"
     original_language = language_detection(path)
+    print(original_language)
     process_audio(path)
     transcript = create_transcript("temp.wav")
-    save_files(transcript, "Transcript_main/transcript_main.txt")
+    save_files(transcript, "Transcript_main/transcript_main_CallRecording3.txt")
     if original_language == "en":
         eng_transcript = transcript
     else:
@@ -69,7 +70,7 @@ def main():
     query = "Summarize"
     LLM_response = LLM(eng_transcript, query)
     print("Getting LLM Response...")
-    save_files(LLM_response, "Response_main/Response_main_eng/eng_response_main.txt")
+    save_files(LLM_response, "Response_main/Response_main_eng/eng_response_main_CallRecording3.txt")
     if original_language != "en":
         ori_lang_response = translate("Response_main/response_main.txt", original_language)
 

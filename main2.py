@@ -1,6 +1,5 @@
-import os, time
 from langchain_community.llms.ollama import Ollama
-from language_detect_test import detect_lang
+from detect_language import detect_language
 from noise_reduction import noise_reduction
 from translation import translate_file
 from convert_to_wav import convert
@@ -9,10 +8,10 @@ from whisper_1 import transcribe
 import assemblyai as aai
 
 aai.settings.api_key = "4da02acda77448cd8368d9d100fde23f"
-ollama = Ollama(base_url="http://localhost:11434", model="llama3.1")
+ollama = Ollama(base_url="http://localhost:11434", model="mistral-nemo")
 
 def language_detection(file_path):
-    detected_language = detect_lang(file_path)
+    detected_language = detect_language(file_path)
     return detected_language
 
 def process_audio(file_path):
@@ -47,7 +46,7 @@ def LLM(transcript, question):
         response = ollama(prompt)
         return response
     except Exception as e:
-        print(f"Failed to get response from LLM model: {e}/nExiting....")
+        print(f"Failed to get response from LLM model: {e}\nExiting....")
         return
 
 def save_files(content, file_path):
@@ -56,32 +55,24 @@ def save_files(content, file_path):
     print("File Saved Successfully")
 
 def main():
-    path = "Audio/Thalaseemia.mp3"
-    response_path = "Output_data/Response/"
-    transcript_path = "Output_data/Transcript"
-    audio_file_name = os.path.splitext(os.path.basename(path))[0]
+    path = "Test audio/CallRecording3.mp3"
     original_language = language_detection(path)
+    print(original_language)
     process_audio(path)
     transcript = create_transcript("temp.wav")
+    save_files(transcript, "Transcript_main/transcript_main_CallRecording3.txt")
     if original_language == "en":
         eng_transcript = transcript
-        save_files(eng_transcript, os.path.join(transcript_path+"/English", f"{audio_file_name}_eng.txt"))
     else:
-        save_files(transcript, os.path.join(transcript_path+"/Original_language", f"{audio_file_name}_ori.txt"))
-        eng_transcript = translate(os.path.join(transcript_path+"/Original_language", f"{audio_file_name}_ori.txt"), "en")
-        save_files(eng_transcript, os.path.join(transcript_path+"/English", f"{audio_file_name}_eng.txt"))
+        eng_transcript = translate("Transcript_main/Transcript_main_eng/transcript_main.txt", "en")
     # query = input("Enter Prompt!!! ")
     # query = "Explain about the issue mentioned in the conversation and the ways to reduce the same."
     query = "Summarize"
     LLM_response = LLM(eng_transcript, query)
     print("Getting LLM Response...")
-    save_files(LLM_response, os.path.join(response_path+"/English", f"{audio_file_name}_eng.txt"))
+    save_files(LLM_response, "Response_main/Response_main_eng/eng_response_main_CallRecording3.txt")
     if original_language != "en":
-        ori_lang_response = translate(os.path.join(response_path+"/English", f"{audio_file_name}_eng.txt"), original_language)
-        save_files(ori_lang_response, os.path.join(response_path+"/Original_language", f"{audio_file_name}_ori.txt"))
+        ori_lang_response = translate("Response_main/response_main.txt", original_language)
+
 if __name__ == "__main__":
-    st = time.time()
     main()
-    et = time.time()
-    execution_time = et - st
-    print(f"Execution time: {execution_time:.6f} seconds")

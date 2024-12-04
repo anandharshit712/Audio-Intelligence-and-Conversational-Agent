@@ -1,7 +1,6 @@
 import whisper
 
-# Load the model and set it to use the GPU
-model = whisper.load_model('turbo').to('cuda')  # Move model to GPU
+model = whisper.load_model('large')
 
 def transcribe(audio_file, detected_language):
     if detected_language:
@@ -11,7 +10,3 @@ def transcribe(audio_file, detected_language):
     else:
         print("Language detection failed; skipping transcription and translation.")
         return None
-
-# path = "CallRecording3.mp3"
-# print(transcribe(path, "hi"))
-

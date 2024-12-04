@@ -1,7 +1,7 @@
-import whisper
+import whisper_original
 import torchaudio
 
-model = whisper.load_model('large')
+model = whisper_original.load_model('large').to('cuda')
 
 def load_audio(audio_path):
     audio, sr = torchaudio.load(audio_path)
@@ -11,8 +11,8 @@ def load_audio(audio_path):
 
 def detect_language(audio_path):
     audio = load_audio(audio_path)
-    audio_padded = whisper.pad_or_trim(audio)
-    mel = whisper.log_mel_spectrogram(audio_padded.unsqueeze(0), n_mels=128).to(model.device)
+    audio_padded = whisper_original.pad_or_trim(audio)
+    mel = whisper_original.log_mel_spectrogram(audio_padded.unsqueeze(0), n_mels=128).to(model.device)
     lang_result = model.detect_language(mel)
     probs = lang_result[1] if len(lang_result) > 1 else []
 
@@ -24,7 +24,3 @@ def detect_language(audio_path):
 
     # print(detected_language)
     return detected_language
-
-# file_path = "Test audio/CallRecording2.mp3"
-# language = detect_language(file_path)
-# print(language)

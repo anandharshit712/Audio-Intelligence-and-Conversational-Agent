@@ -1,9 +1,9 @@
-libretranslate
-libretranslatepy
 torchaudio
+torch
 noisereduce
 librosa
 soundfile
+moviepy
 mimetype
 pydub
 assemblyai

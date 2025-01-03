@@ -51,7 +51,7 @@ dependencies = [
     "argos-translate-files ==1.1.4",
     "itsdangerous ==2.1.2",
     "Werkzeug ==3.0.6",
-    "requests ==2.31.0",
+    "requests ==2.32.2",
     "redis ==4.4.4",
     "prometheus-client ==0.15.0",
     "polib ==1.1.1",

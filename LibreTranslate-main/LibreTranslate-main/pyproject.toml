@@ -40,7 +40,7 @@ dependencies = [
     "Flask-Limiter ==2.6.3",
     "Flask-Babel ==3.1.0",
     "Flask-Session ==0.4.0",
-    "waitress ==2.1.2",
+    "waitress ==3.0.1",
     "expiringdict ==1.2.2",
     "langdetect==1.0.9",
     "lexilang==1.0.1",

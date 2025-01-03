@@ -50,7 +50,7 @@ dependencies = [
     "translatehtml ==1.5.2",
     "argos-translate-files ==1.1.4",
     "itsdangerous ==2.1.2",
-    "Werkzeug ==2.3.8",
+    "Werkzeug ==3.0.6",
     "requests ==2.31.0",
     "redis ==4.4.4",
     "prometheus-client ==0.15.0",
